@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>05 - IMC</title>
+
+
+    <script>
+        //obter peso
+        let peso = parseFloat(prompt("informe seu peso"));
+
+        //Obter altura
+        let altura = parseFloat(prompt("informe seu altura"));
+
+
+        //calculo de imc
+        let imc = peso / Math.pow(altura, 2)
+
+        //exibir calculo
+        document.write("seu imc é de " + imc.toFixed(2))
+
+        //pular linha
+        document.write("<br>")
+
+        //Condicional
+        if (imc < 18.5) {
+            document.write("abaixo do peso")
+        } else if (imc < 25) {
+            document.write("peso normal")
+        } else if (imc < 30) {
+            document.write("sobrepeso")
+        } else if (imc < 35) {
+            document.write("obesidade I")
+        } else if (imc < 40) {
+            document.write("obesidade II")
+        } else if (imc < 45) {
+            document.write("obesidade III")
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

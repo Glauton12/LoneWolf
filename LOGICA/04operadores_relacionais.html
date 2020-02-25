@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04 - Operadores relacionais</title>
+
+
+    <script>
+        // variavel idade
+        let idade = 22;
+
+        //operadores relacionais
+        document.write((idade > 18) + "<hr>") //Maior
+        document.write((idade >= 18) + "<hr>") //Maior ou igual
+        document.write((idade < 18) + "<hr>") //Menor
+        document.write((idade <= 18) + "<hr>") //Menor igual
+        document.write((idade == 18) + "<hr>") //Igual
+        document.write((idade != 18) + "<hr>") //Diferente
+
+        //condicional
+        if (idade >= 18) {
+            document.write("maior de idade")
+        } else {
+            document.write("Menor de idade")
+        }
+
+        //Operador ternario
+        document.write("<br><br>")
+        document.write(idade >= 18 ? "maior de idade" : "menor de idade")
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
