@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>O4 - Exercício</title>
+
+    <script>
+
+        //Obter dados
+        let centavo1 = prompt("R$0,01")
+        let centavo5 = prompt("R$0,05")
+        let centavo10 = prompt("R$0,10")
+        let centavo25 = prompt("R$0,25")
+        let centavo50 = prompt("R$0,50")
+        let real1 = prompt("R$1,00")
+
+        //calculo
+        let total1 = centavo1 * 0.01
+        total1 += centavo5 * 0.05
+        total1 += centavo10 * 0.10
+        total1 += centavo25 * 0.25
+        total1 += centavo50 * 0.50
+        total1 += real1 * 1.00
+
+        //exibir
+        document.write("R$ " + total1.toFixed(2))
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

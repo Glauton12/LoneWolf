@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>O6 - Exercício</title>
+
+    <script>
+
+        //lados do quadrado
+        let ladodireito = prompt("informe o lado direito")
+        let ladoesquerdo = prompt("informe o lado esquerdo")
+        let ladoinferior = prompt("informe o lado inferior")
+
+        //condicional
+        if ((ladodireito == ladoesquerdo) && (ladoesquerdo == ladoinferior)) {
+            document.write("É um equilátero")
+        } else if ((ladodireito != ladoesquerdo) && (ladoesquerdo != ladoinferior)) {
+            document.write("escaleno")
+        } else {
+            document.write("Isóceles")
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

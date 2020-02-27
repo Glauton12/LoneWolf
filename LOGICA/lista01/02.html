@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>O2 - Exercício</title>
+
+    <script>
+
+        //mensagem
+        let mensagem = "escolha o número do pedido"
+        mensagem += "\n\n1) pizza"
+        mensagem += "\n2) Pão de queijo"
+        mensagem += "\n3) macarrão"
+        mensagem += "\n4) pastel"
+
+        //obter dados
+        let pedido = prompt(mensagem)
+        let pagamento = prompt("quanto foi o pagamento?")
+
+        //variavel tipo troco
+        let troco;
+
+        //condicional
+        if (pedido == 1) {
+            troco = pagamento - 12
+        } else if (pedido == 2) {
+            troco = pagamento - 4
+        } else if (pedido == 3) {
+            troco = pagamento - 16
+        } else if (pedido == 4) {
+            troco = pagamento - 4.5
+        }
+
+        //exibir
+        if (troco < 0) {
+            document.write("o valor do pagamento é menor que o do pedido")
+        } else {
+            document.write("troco: R$" + troco)
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
