@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>14 - função</title>
+
+
+    <script>
+      
+    // vetor
+    let nomes = []
+
+      function cadastrar(){
+    //    armazenar o objeto
+        let campo = document.getElementById("campo")
+        
+        // validar nome duplicado
+        if(nomesduplicados(campo.value) ==false){
+
+    // Adicionar ao vetor
+    nomes.push(campo.value)
+    console.log(nomes)
+
+    // atualizar a lista
+    listar(campo.value)
+    
+    // limpar o nome
+    campo.value = ""
+
+    // cursor
+    campo.focus()
+
+    }else{
+        alert("O nome informado já está cadastrado")
+    }
+}
+
+    // listagem
+    function listar(nome){
+        // obter lista
+        let lista = document.getElementById("lista")
+
+        // criar item de lista
+        let item= document.createElement("li")
+
+        // texto do item
+        let texto = document.createTextNode(nome)
+
+        // unir o item com o texto
+        item.appendChild(texto)
+
+        // adicionar o item na lista
+        lista.appendChild(item)
+
+    }
+
+    // verificar nomes duplicados
+    function nomesduplicados(nome){
+        let retorno  = false
+
+        for(let indice=0; indice<nomes.length; indice++){
+            if(nomes[indice] == nome){
+            retorno = true
+            break
+            }
+        }
+
+        return retorno
+
+    }
+
+    </script>
+</head>
+
+<body>
+
+<!-- Formulário -->
+<input type="text" placeholder="informe um nome" id="campo">
+<button onclick="cadastrar()">Enviar</button>
+
+<!-- lista -->
+<ul id="lista"></ul>
+
+</body>
+
+</html>
