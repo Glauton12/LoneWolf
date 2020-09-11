@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>API -  HealthAndCare</title>
+
+    
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!--ESTILOS-->
+    <link rel="stylesheet" href="estilos.css">
+
+                <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+
+    <!-- Script -->
+    <script>
+
+        // JSON
+        var paciente = [];
+
+        // Obter dados da API
+        function obterPacientes(){
+            $.get("http://localhost:8090/paciente", function(dados){
+                // Adicionar ao JSON
+                pacientes = dados;
+
+                // Limpar tabela
+                $("table tbody").empty();
+
+                // Laço de repetição
+                for(var indice=0; indice<pacientes.length; indice++){
+
+                    // Estrutura
+                    var estrutura = "<tr>";
+                        estrutura+= "<td>"+pacientes[indice].codigo+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].Paciente+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].cpf+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].afeccao+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].complicacao+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].internacao+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].endereco+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].idade+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].iniciais+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].sexo+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].numero+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].ocupacao+"</td>";
+                        estrutura+= "<td>"+pacientes[indice].telefone+"</td>";
+                        estrutura+= "<td><button class='btn btn-success'onclick='selecionar("+pacientes[indice].codigo+")'>selecionar</td>"
+                        estrutura+= "</tr>";
+
+                    // Exibir na tabela
+                    $("table tbody").append(estrutura);
+                
+                }
+
+                
+            });
+        }
+        
+        // Carregar toda a estrutura HTML e CSS
+        $(document).ready(function(){
+
+            // Obter todos os usuários
+            obterPacientes();            
+
+            // Cadastrar Paciente
+            $("#btnCadastrar").click(function(){
+                // Obter Dados do paciente
+                var paciente = $("#paciente").val();
+                var cpf = $("#cpf").val();
+                var afeccao = $("#afeccao").val();
+                var complicacao = $("#complicacao").val();
+                var internacao = $("#internacao").val();
+                var endereco = $("#endereco").val();
+                var idade = $("#idade").val();
+                var iniciais = $("#iniciais").val();
+                var sexo = $("#sexo").val();
+                var numero = $("#numero").val();
+                var ocupacao = $("#ocupacao").val();
+                var telefone = $("#telefone").val();
+
+                // Estrutura JSON
+                var estrutura = '{"codigo":'+codigo+',"paciente":"'+paciente+'", "cpf":"'+cpf+'", "afeccao":"'+afeccao+'", "complicacao":"'+complicacao+'", "internacao":"'+internacao+'", "endereco":"'+endereco+'", "idade":'+idade+', "iniciais":"'+iniciais+'", "sexo":"'+sexo+'", numero":'+numero+', "ocupacao":"'+ocupacao+'", telefone":'+telefone+'}';
+
+                // Enviando para a API
+                $.ajax({
+                    url: "http://localhost:8090/paciente",
+                    type: "POST",
+                    data: estrutura,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        // Exibir resposta da API
+                        var r = resposta;
+
+                        // Alerta
+                        alert(r.mensagem);
+
+                        // Atualizar a tabela
+                        obterPacientes();
+                    }
+                });
+            });
+
+        });
+
+        //Selecionar dados do Paciente
+        function selecionar(codigo){
+        
+            $.ajax({
+                    url: "http://localhost:8090/paciente/"+codigo,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                      
+                        $("#codigo").val(resposta.codigo);
+                        $("#paciente").val(resposta.paciente);
+                        $("#cpf").val(resposta.cpf);
+                        $("#afeccao").val(resposta.afeccao);
+                        $("#complicacao").val(resposta.complicacao);
+                        $("#internacao").val(resposta.internacao);
+                        $("#endereco").val(resposta.endereco);
+                        $("#idade").val(resposta.idade);
+                        $("#iniciais").val(resposta.iniciais);
+                        $("#sexo").val(resposta.sexo);
+                        $("#numero").val(resposta.numero);
+                        $("#ocupacao").val(resposta.ocupacao);
+                        $("#telefone").val(resposta.telefone);
+                        
+                        $("#btnCadastrar").css("display", "none");
+                        $("#btnAlterar").css("display", "inline-block");
+                        $("#btnRemover").css("display", "inline-block");
+
+                        //Atualizar tabela
+                        obterPacientes();
+
+                    }
+                });
+        
+        }
+
+        //Remover usuario
+        function remover()
+        {
+             var codigo = $("#codigo").val();
+            
+            $.ajax({
+                    url: "http://localhost:8090/paciente/"+codigo,
+                    type: "DELETE",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        alert(resposta.mensagem);
+                      
+                    
+                        $("#codigo").val("");
+                        $("#paciente").val("");
+                        $("#cpf").val("");
+                        $("#afeccao").val("");
+                        $("#complicacao").val("");
+                        $("#internacao").val("");
+                        $("#endereco").val("");
+                        $("#idade").val("");
+                        $("#iniciais").val("");
+                        $("#sexo").val("");
+                        $("#numero").val("");
+                        $("#ocupacao").val("");
+                        $("#telefone").val("");
+                        
+                        $("#btnCadastrar").css("display", "inline-block");
+                        $("#btnAlterar").css("display", "none");
+                        $("#btnRemover").css("display", "none");
+
+                        //Atualizar tabela
+                        obterPacientes();
+
+                    }
+                });
+
+            
+        }
+
+        // Alterar usuário
+        function alterar(){
+
+        // Obter dados
+        var paciente = $("#paciente").val();
+        var cpf = $("#cpf").val();
+        var afeccao = $("#afeccao").val();
+        var complicacao = $("#complicacao").val();
+        var internacao = $("#internacao").val();
+        var endereco = $("#endereco").val();
+        var idade = $("#idade").val();
+        var iniciais = $("#iniciais").val();
+        var sexo = $("#sexo").val();
+        var numero = $("#numero").val();
+        var ocupacao = $("#ocupacao").val();
+        var telefone = $("#telefone").val();
+
+        // Estrutura JSON
+        var estrutura = '{"codigo":'+codigo+',"paciente":"'+paciente+'", "cpf":"'+cpf+'", "afeccao":'+afeccao+', "complicacao":'+complicacao+', "internacao":'+internacao+', "endereco":'+endereco+', "idade":'+idade+', "iniciais":'+iniciais+', "sexo":'+sexo+', "numero":'+numero+', "ocupacao":'+ocupacao+', "telefone":'+telefone+'}';
+            console.log(estrutura);
+        // Enviando para a API
+        $.ajax({
+            url: "http://localhost:8090/paciente",
+            type: "PUT",
+            data: estrutura,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(resposta){
+
+                // Limpar campos
+                $("#codigo").val("");
+                $("#paciente").val("");
+                $("#cpf").val("");
+                $("#afeccao").val("");
+                $("#complicacao").val("");
+                $("#internacao").val("");
+                $("#endereco").val("");
+                $("#idade").val("");
+                $("#iniciais").val("");
+                $("#sexo").val("");
+                $("#numero").val("");
+                $("#ocupacao").val("");
+                $("#telefone").val("");
+
+                // Botões
+                $("#btnCadastrar").css("display","inline-block");
+                $("#btnAlterar").css("display","none");
+                $("#btnRemover").css("display","none");
+
+                // Alerta
+                alert(resposta.mensagem);
+
+                // Atualizar a tabela
+                obterPacientes();
+            }
+        });
+        }
+
+    </script>
+
+</head>
+<body>
+    
+    	
+    <img src="logo.PNG">
+    <h1 style="font-size: 2cm; font-style: oblique; margin-left: 19cm;">Health And Care</h1>   
+    
+    <!-- Formulário -->
+        <form>
+            <input type="text" id="codigo"  readonly class="form-control">
+            <input type="text" placeholder="Paciente" id="paciente"              style="left: 600px; width: 250px; position: absolute; top: 150px; height: 30px;" class="form-control">
+            <input type="text" placeholder="CPF" id="cpf"                        style="left: 600px; width: 250px; position: absolute; top: 200px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Afecção Hospitalar" id="afeccao"     style="left: 600px; width: 250px; position: absolute; top: 250px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Complicação" id="complicacao"        style="left: 600px; width: 250px; position: absolute; top: 300px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Data de Internação" id="internacao"  style="left: 865px; width: 250px; position: absolute; top: 150px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Endereço" id="endereco"              style="left: 865px; width: 250px; position: absolute; top: 200px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Idade" id="idade"                    style="left: 865px; width: 250px; position: absolute; top: 250px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Iniciais" id="iniciais"              style="left: 865px; width: 250px; position: absolute; top: 300px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Sexo" id="sexo"                      style="left: 1130px; width: 250px; position: absolute; top: 150px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Número" id="numero"                  style="left: 1130px; width: 250px; position: absolute; top: 200px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Ocupação" id="ocupacao"              style="left: 1130px; width: 250px; position: absolute; top: 250px; height: 30px;" class="form-control">
+            <input type="text" placeholder="Telefone" id="telefone"              style="left: 1130px; width: 250px; position: absolute; top: 300px; height: 30px;" class="form-control">
+            <header>
+                <input type="button" id="btnCadastrar" value="Cadastrar" class="btn btn-primary">
+                <input type="button" id="btnAlterar" value="Alterar" onclick="alterar()" class="btn btn-secondary">
+                <input type="button" id="btnRemover" value="Remover" onclick="remover()" class="btn btn-danger">
+            </header>
+        </form>
+
+        <!--style="left: 36px; width: 125px; position: absolute; top: 34.5px; height: 33px;"-->
+
+        <!-- Tabela -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Registro</th>
+                    <th>paciente</th>
+                    <th>CPF</th>
+                    <th>Afecção Hospitalar</th>
+                    <th>Complicação</th>
+                    <th>Data de Internação</th>
+                    <th>Endereço</th>
+                    <th>Idade</th>
+                    <th>Iniciais</th>
+                    <th>Sexo</th>
+                    <th>Número</th>
+                    <th>Ocupação</th>
+                    <th>Telefone</th>
+
+                </tr>
+            </thead>
+    
+            <tbody>
+                
+            </tbody>
+        </table>
+    
+</body>
+</html>

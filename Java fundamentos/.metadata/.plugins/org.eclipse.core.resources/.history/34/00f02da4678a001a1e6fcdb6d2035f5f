@@ -1,0 +1,55 @@
+package dao;
+
+import javax.swing.table.DefaultTableModel;
+
+import bean.AlunoB;
+import db.ListaAlunos;
+
+public class AlunoD {
+	
+	//Cadastrar
+	public static void cadastrar(AlunoB aluno) {
+		ListaAlunos.alunos.add(aluno);
+	
+	}
+	
+	//Selecionar 
+	
+	public static DefaultTableModel selecionar() {
+		DefaultTableModel dados = new DefaultTableModel();
+		dados.addColumn("Nome");
+		dados.addColumn("Nota 1");
+		dados.addColumn("Nota 2");
+		dados.addColumn("Média");
+		
+		for(int indice = 0; indice <ListaAlunos.alunos.size(); indice++) {
+		//Calculo
+			double nota1 =ListaAlunos.alunos.get(indice).getNota1();
+			double nota2 =ListaAlunos.alunos.get(indice).getNota2();
+			double media = (nota1 + nota2)/2;
+			
+			
+		//Linha
+			dados.addRow(new Object[]{
+			ListaAlunos.alunos.get(indice).getNome(),
+			nota1,
+			nota2,
+			media
+			
+
+		}
+		
+		
+		
+		return dados;
+	}
+	
+	//Alterar
+	
+	
+	
+	//Excluir
+	
+	
+
+}

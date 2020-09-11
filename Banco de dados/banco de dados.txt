@@ -1,0 +1,53 @@
+*Conceitos Básicos*
+
+Banco de Dados: Local para armazenar dados por tempo indeterminado.
+SGDB: Sistema Gerenciador de Banco de Dados. Exemplo: Oracle, Mysql, SQL Server, PostgreSQL...
+DBA: Database Administrator, responsável pela elaboração do banco de dados (Software e Hardware)
+SQL: Structure Query Language (Linguagem Estrutura de Dados)
+*DDL: Data Define Language: Manipular estruturas como: bases de dados e tabelas
+*DML: Data Manipulation Language: Inserir, alterar, selecionar ou excluir
+
+
+*Estruturas de um banco de dados*
+*Bancos relacionais: Interligar dados entre tabelas e garantir sua existência
+*Bancos não relacionais: Não garantem a integridade dos dados, porém são extremamente rápidos
+
+
+*Normalização*
+A normalização possui possui até 5 níveis de arquitetura. A ideia é deixar a estrutura dos dados
+fáceis de manipular e garantir performance ao obter ou enviar informações.
+
+Exemplo: Será necessário armazenar um nome, contato e endereço.
+1º
+tabela: usuário (nome, contato, endereço)
+
+2º
+tabela: usuário(nome, celular, e-mail, estado, cidade, cep, bairro, rua, número)
+
+3º
+tabela: usuário (nome, identificador contato, identificado endereço)
+tabela: contato (identificador contato, celular, e-mail)
+tabela: endereço (identificador endereço, estado, cidade, cep, bairro, rua, número)
+
+
+*Download do SGBD*
+https://dev.mysql.com/downloads/installer/
+
+
+*Estrutura de um banco de dados relacional*
+* Base de dados: Local onde serão armazenados todos os dados de um determinado projeto/cliente
+* Tabelas: São dados específicos que estarão sendo armazenados nas bases de dados
+
+
+
+
+
+
+
+
+
+
+
+
+
+

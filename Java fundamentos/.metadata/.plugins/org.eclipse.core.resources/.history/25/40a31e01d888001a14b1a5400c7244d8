@@ -1,0 +1,77 @@
+package forms;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+
+public class FormularioAluno extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtNome;
+	private JTextField txtNota1;
+	private JTextField txtNota2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FormularioAluno frame = new FormularioAluno();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FormularioAluno() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNome.setBounds(10, 11, 46, 14);
+		contentPane.add(lblNome);
+		
+		JLabel lblNota1 = new JLabel("Nota 1");
+		lblNota1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNota1.setBounds(10, 49, 58, 14);
+		contentPane.add(lblNota1);
+		
+		JLabel lblNota2 = new JLabel("Nota 2");
+		lblNota2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNota2.setBounds(209, 49, 58, 14);
+		contentPane.add(lblNota2);
+		
+		txtNome = new JTextField();
+		txtNome.setBounds(66, 10, 326, 20);
+		contentPane.add(txtNome);
+		txtNome.setColumns(10);
+		
+		txtNota1 = new JTextField();
+		txtNota1.setBounds(66, 48, 133, 20);
+		contentPane.add(txtNota1);
+		txtNota1.setColumns(10);
+		
+		txtNota2 = new JTextField();
+		txtNota2.setColumns(10);
+		txtNota2.setBounds(261, 48, 131, 20);
+		contentPane.add(txtNota2);
+	}
+}

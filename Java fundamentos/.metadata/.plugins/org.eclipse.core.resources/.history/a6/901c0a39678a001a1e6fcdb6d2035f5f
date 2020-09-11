@@ -1,0 +1,32 @@
+package dao;
+
+import javax.swing.table.DefaultTableModel;
+
+import bean.AlunoB;
+import db.ListaAlunos;
+
+public class AlunoD {
+	
+	//Cadastrar
+	public static void cadastrar(AlunoB aluno) {
+		ListaAlunos.alunos.add(aluno);
+	
+	}
+	
+	//Selecionar 
+	
+	public static DefaultTableModel selecionar() {
+		DefaultTableModel dados = new DefaultTableModel();
+		
+		return dados;
+	}
+	
+	//Alterar
+	
+	
+	
+	//Excluir
+	
+	
+
+}

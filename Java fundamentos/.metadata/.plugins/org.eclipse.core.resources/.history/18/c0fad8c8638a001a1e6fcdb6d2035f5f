@@ -1,0 +1,20 @@
+package dao;
+
+import bean.AlunoB;
+import db.ListaAlunos;
+
+public class AlunoD {
+	
+	//Cadastrar
+	public static void cadastrar(AlunoB aluno) {
+		ListaAlunos.alunos.add(aluno);
+	
+	}
+	
+	//Selecionar 
+	
+	//Alterar
+	
+	//Excluir
+
+}

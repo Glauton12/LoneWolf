@@ -1,0 +1,68 @@
+package ex2;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import java.awt.BorderLayout;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.DefaultComboBoxModel;
+
+public class Formulario {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Formulario window = new Formulario();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Formulario() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JComboBox sabores = new JComboBox();
+		sabores.setModel(new DefaultComboBoxModel(new String[] {"Pizza", "p\u00E3o de queijo"}));
+		sabores.setBounds(84, 108, 265, 36);
+		sabores.setToolTipText("Pizza");
+		sabores.setToolTipText("Pão de queijo");
+		sabores.setToolTipText("Macarrão");
+		sabores.setToolTipText("Pastel");
+		frame.getContentPane().add(sabores);
+		
+		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setBounds(172, 172, 89, 23);
+		frame.getContentPane().add(btnConfirmar);
+		
+		JLabel lblEscolha = new JLabel("Escolha o seu pedido abaixo");
+		lblEscolha.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblEscolha.setBounds(112, 43, 209, 23);
+		frame.getContentPane().add(lblEscolha);
+	}
+}

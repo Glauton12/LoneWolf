@@ -1,0 +1,124 @@
+package forms;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+public class FormularioCliente extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtCliente;
+	private JTextField txtFilme;
+	private JTextField txtDLocacao;
+	private JTextField txtDEntrega;
+	private JTable table;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FormularioCliente frame = new FormularioCliente();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FormularioCliente() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 416, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblCliente = new JLabel("Cliente");
+		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCliente.setBounds(10, 11, 66, 17);
+		contentPane.add(lblCliente);
+		
+		JLabel lblFilme = new JLabel("Filme");
+		lblFilme.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFilme.setBounds(10, 40, 66, 17);
+		contentPane.add(lblFilme);
+		
+		JLabel lblDLocacao = new JLabel("Data de Loca\u00E7\u00E3o");
+		lblDLocacao.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDLocacao.setBounds(208, 11, 113, 17);
+		contentPane.add(lblDLocacao);
+		
+		JLabel lblDEntrega = new JLabel("Data de Entrega");
+		lblDEntrega.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDEntrega.setBounds(208, 40, 113, 17);
+		contentPane.add(lblDEntrega);
+		
+		txtCliente = new JTextField();
+		txtCliente.setBounds(67, 11, 131, 20);
+		contentPane.add(txtCliente);
+		txtCliente.setColumns(10);
+		
+		txtFilme = new JTextField();
+		txtFilme.setBounds(67, 40, 131, 20);
+		contentPane.add(txtFilme);
+		txtFilme.setColumns(10);
+		
+		txtDLocacao = new JTextField();
+		txtDLocacao.setBounds(331, 11, 66, 20);
+		contentPane.add(txtDLocacao);
+		txtDLocacao.setColumns(10);
+		
+		txtDEntrega = new JTextField();
+		txtDEntrega.setBounds(331, 40, 66, 20);
+		contentPane.add(txtDEntrega);
+		txtDEntrega.setColumns(10);
+		
+		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setBounds(10, 68, 89, 23);
+		contentPane.add(btnCadastrar);
+		
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setBounds(109, 68, 89, 23);
+		contentPane.add(btnAlterar);
+		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setBounds(208, 68, 89, 23);
+		contentPane.add(btnExcluir);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(307, 68, 89, 23);
+		contentPane.add(btnCancelar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 102, 380, 268);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Cliente", "Filme", "Data de Locação", "Data de entrega"
+			}
+		));
+		scrollPane.setViewportView(table);
+	}
+
+}

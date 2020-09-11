@@ -1,0 +1,58 @@
+package ex2;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import java.awt.BorderLayout;
+import javax.swing.JTextField;
+
+public class Formulario {
+
+	private JFrame frame;
+	private JTextField perguntaSabores;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Formulario window = new Formulario();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Formulario() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JComboBox sabores = new JComboBox();
+		sabores.setBounds(74, 108, 265, 36);
+		sabores.setToolTipText("Pizza, P\u00E3o de queijo, Macarr\u00E3o, Pastel");
+		frame.getContentPane().add(sabores);
+		
+		perguntaSabores = new JTextField();
+		perguntaSabores.setToolTipText("Escolha os sabores abaixo");
+		perguntaSabores.setBounds(74, 47, 269, 27);
+		frame.getContentPane().add(perguntaSabores);
+		perguntaSabores.setColumns(10);
+	}
+}

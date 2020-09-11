@@ -1,0 +1,105 @@
+package ex1;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPasswordField;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTable;
+import java.awt.Label;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Formulario {
+
+	private JFrame frame;
+	private JTextField txtNota1;
+	private JTextField txtNota2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Formulario window = new Formulario();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Formulario() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 228, 220);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNota1 = new JLabel("Nota 1");
+		lblNota1.setForeground(Color.RED);
+		lblNota1.setBounds(10, 27, 78, 25);
+		frame.getContentPane().add(lblNota1);
+		
+		JLabel lblSegundaNota = new JLabel("Segunda nota");
+		lblSegundaNota.setForeground(new Color(0, 128, 0));
+		lblSegundaNota.setBounds(10, 63, 97, 32);
+		frame.getContentPane().add(lblSegundaNota);
+		
+		txtNota1 = new JTextField();
+		txtNota1.setBounds(88, 29, 86, 20);
+		frame.getContentPane().add(txtNota1);
+		txtNota1.setColumns(10);
+		
+		txtNota2 = new JTextField();
+		txtNota2.setBounds(88, 69, 86, 20);
+		frame.getContentPane().add(txtNota2);
+		txtNota2.setColumns(10);
+		
+		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//obter notas
+				double nota1 = Double.parseDouble(txtNota1.getText());
+				double nota2 = Double.parseDouble(txtNota1.getText());
+				
+				//media
+				double media = (nota1 + nota2)/2;
+				
+				//situação
+				String situacao = media >= 7 ?"Aprovado" : "Reprovado";
+				
+				//Mensagem
+				JOptionPane.showMessageDialog(null, situacao+" com média"+media);
+	
+				
+				
+			}
+		});
+		btnEnviar.setBounds(47, 130, 105, 20);
+		frame.getContentPane().add(btnEnviar);
+	}
+}

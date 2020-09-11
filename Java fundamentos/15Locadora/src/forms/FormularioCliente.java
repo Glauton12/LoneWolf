@@ -1,0 +1,324 @@
+package forms;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import bean.ClienteB;
+import dao.ClienteD;
+import db.ListaClientes;
+
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+
+public class FormularioCliente extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtCliente;
+	private JTextField txtFilme;
+	private JTextField txtDLocacao;
+	private JTextField txtDEntrega;
+	private JTable table;
+	private int linhaSelecionada;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FormularioCliente frame = new FormularioCliente();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FormularioCliente() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 416, 420);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblCliente = new JLabel("Cliente");
+		lblCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCliente.setBounds(10, 11, 66, 17);
+		contentPane.add(lblCliente);
+		
+		JLabel lblFilme = new JLabel("Filme");
+		lblFilme.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblFilme.setBounds(10, 40, 66, 17);
+		contentPane.add(lblFilme);
+		
+		JLabel lblDLocacao = new JLabel("Data de Locação");
+		lblDLocacao.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDLocacao.setBounds(208, 11, 113, 17);
+		contentPane.add(lblDLocacao);
+		
+		JLabel lblDEntrega = new JLabel("Data de Entrega");
+		lblDEntrega.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblDEntrega.setBounds(208, 40, 113, 17);
+		contentPane.add(lblDEntrega);
+		
+		txtCliente = new JTextField();
+		txtCliente.setBounds(67, 11, 131, 20);
+		contentPane.add(txtCliente);
+		txtCliente.setColumns(10);
+		
+		txtFilme = new JTextField();
+		txtFilme.setBounds(67, 40, 131, 20);
+		contentPane.add(txtFilme);
+		txtFilme.setColumns(10);
+		
+		txtDLocacao = new JTextField();
+		txtDLocacao.setBounds(331, 11, 66, 20);
+		contentPane.add(txtDLocacao);
+		txtDLocacao.setColumns(10);
+		
+		txtDEntrega = new JTextField();
+		txtDEntrega.setBounds(331, 40, 66, 20);
+		contentPane.add(txtDEntrega);
+		txtDEntrega.setColumns(10);
+		
+		//botões
+		JButton btnExcluir = new JButton("Excluir");
+		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnAlterar = new JButton("Alterar");
+		JButton btnCadastrar = new JButton("Cadastrar");
+		
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//obter dados
+				String cliente = txtCliente.getText();
+				String filme = txtFilme.getText();
+				String datal = txtDLocacao.getText();
+				String dataE = txtDEntrega.getText();
+				
+				//Instaciar um obj da classe clienteB
+				ClienteB cb = new ClienteB();
+				cb.setCliente(cliente);
+				cb.setFilme(filme);
+				cb.setDatal(datal);
+				cb.setDataE(dataE);
+				
+				//chamar o metodo 
+				ClienteD.cadastrar(cb);
+				
+				//Atualizar table
+				table.setModel(ClienteD.selecionar());
+				
+				//Limpar
+				limpar();
+				
+				//mensagem
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado");
+				
+				
+				/*listar
+				for (ClienteB c : ListaClientes.clientes) {
+					System.out.println(c.getCliente());
+				}
+				System.out.println("-------------------------------");*/
+				
+				
+			}
+		});
+		btnCadastrar.setBounds(10, 68, 89, 23);
+		contentPane.add(btnCadastrar);
+		
+		btnAlterar.setEnabled(false);
+		btnAlterar.setBounds(109, 68, 89, 23);
+		contentPane.add(btnAlterar);
+		btnAlterar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Obter dados
+				String cliente = txtCliente.getText();
+				String filme = txtFilme.getText();
+				String datal = txtDLocacao.getText();
+				String dataE = txtDEntrega.getText();
+				
+				//instanciar um obj da classe clienteB
+				ClienteB cb = new ClienteB();
+				cb.setCliente(cliente);
+				cb.setFilme(filme);
+				cb.setDatal(datal);
+				cb.setDataE(dataE);
+				
+				//Alterar do arraylist
+				ClienteD.alterar(linhaSelecionada, cb);
+				
+				//Atualizar table
+				table.setModel(ClienteD.selecionar());
+				
+				//limpar
+				limpar ();
+				
+				//habilitar button cadastrar
+				btnCadastrar.setEnabled(true);
+				
+				//Desabilitar os botões: alterar, excluir, cancelar
+				btnAlterar.setEnabled(false);
+				btnExcluir.setEnabled(false);
+				btnCancelar.setEnabled(false);
+				
+				//Mensagem
+				JOptionPane.showMessageDialog(null, "Cliente alterado");
+				
+				
+				
+			}
+		});
+		
+		btnExcluir.setEnabled(false);
+		btnExcluir.setBounds(208, 68, 89, 23);
+		contentPane.add(btnExcluir);
+		btnExcluir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			
+				//Excluir do arraylist
+				ClienteD.excluir(linhaSelecionada);
+				
+				//Atualizar table
+				table.setModel(ClienteD.selecionar());
+				
+				//Limpar campos
+				limpar();
+				
+				//Remover todos os dados da tabela
+				table.removeAll();
+				
+				//habilitar botão  cadastrar
+				btnCadastrar.setEnabled(true);
+				
+				//Desabilitar botão cadastrar
+				btnAlterar.setEnabled(false);
+				btnExcluir.setEnabled(false);
+				btnCancelar.setEnabled(false);
+				
+				//mensagem
+				JOptionPane.showMessageDialog(null, "Removido com sucesso");
+
+			}
+		});
+		
+		btnCancelar.setEnabled(false);
+		btnCancelar.setBounds(307, 68, 89, 23);
+		contentPane.add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//Habilitar botão cadastrar
+				btnCadastrar.setEnabled(true);
+				
+				//Desabilitar botão cadastrar
+				btnAlterar.setEnabled(false);
+				btnExcluir.setEnabled(false);
+				btnCancelar.setEnabled(false);
+				
+				//limpar
+				limpar();
+				
+				// Mensagem
+				JOptionPane.showMessageDialog(null, "Ação cancelada");
+				
+			}
+		});
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 102, 380, 268);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				//linha selecionada
+				linhaSelecionada = table.getSelectedRow();
+				
+				//campos de texto
+				txtCliente.setText(table.getValueAt(linhaSelecionada, 0).toString());
+				txtFilme.setText(table.getValueAt(linhaSelecionada, 1).toString());
+				txtDLocacao.setText(table.getValueAt(linhaSelecionada, 2).toString());
+				txtDEntrega.setText(table.getValueAt(linhaSelecionada, 2).toString());
+				
+				//Desabilitar botão cadastrar
+				btnCadastrar.setEnabled(false);
+				
+				//Desabilitar botão cadastrar
+				btnAlterar.setEnabled(true);
+				btnExcluir.setEnabled(true);
+				btnCancelar.setEnabled(true);
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+		
+		//Limpar campos
+		private void limpar() {
+			txtCliente.setText("");
+			txtFilme.setText("");
+			txtDLocacao.setText("");
+			txtDEntrega.setText("");
+	}
+		
+	
+
+}

@@ -1,0 +1,71 @@
+package ex4;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+public class Formulario {
+
+	private JFrame frame;
+	private JTextField txtN1;
+	private JTextField txtN2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Formulario window = new Formulario();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Formulario() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Informe dois numeros");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(140, 26, 154, 34);
+		frame.getContentPane().add(lblNewLabel);
+		
+		txtN1 = new JTextField();
+		txtN1.setBounds(178, 71, 86, 20);
+		frame.getContentPane().add(txtN1);
+		txtN1.setColumns(10);
+		
+		txtN2 = new JTextField();
+		txtN2.setBounds(178, 102, 86, 20);
+		frame.getContentPane().add(txtN2);
+		txtN2.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Soma", "Subtra\u00E7\u00E3o", "Divis\u00E3o", "Multiplica\u00E7\u00E3o"}));
+		comboBox.setBounds(178, 157, 86, 22);
+		frame.getContentPane().add(comboBox);
+	}
+
+}

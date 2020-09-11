@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>API -  produtos</title>
+
+    
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!--ESTILOS-->
+    <link rel="stylesheet" href="estilos.css">
+
+                <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+
+    <!-- Script -->
+    <script>
+
+        // JSON
+        var produtos = [];
+
+        // Obter dados da API
+        function obterProdutos(){
+            $.get("http://localhost:8090/produto", function(dados){
+                // Adicionar ao JSON
+                produtos = dados;
+
+                // Limpar tabela
+                $("table tbody").empty();
+
+                // Laço de repetição
+                for(var indice=0; indice<produtos.length; indice++){
+
+                    // Estrutura
+                    var estrutura = "<tr>";
+                        estrutura+= "<td>"+produtos[indice].codigo+"</td>";
+                        estrutura+= "<td>"+produtos[indice].produto+"</td>";
+                        estrutura+= "<td>"+produtos[indice].marca+"</td>";
+                        estrutura+= "<td>"+produtos[indice].estoque+"</td>";
+                        estrutura+= "<td>"+produtos[indice].valor+"</td>";
+                        estrutura+= "<td><button class='btn btn-success'onclick='selecionar("+produtos[indice].codigo+")'>selecionar</td>"
+                        estrutura+= "</tr>";
+
+                    // Exibir na tabela
+                    $("table tbody").append(estrutura);
+                
+                }
+
+                
+            });
+        }
+        
+        // Carregar toda a estrutura HTML e CSS
+        $(document).ready(function(){
+
+            // Obter todos os usuários
+            obterProdutos();            
+
+            // Cadastrar usuário
+            $("#btnCadastrar").click(function(){
+                // Obter nome e idade
+                var produto = $("#produto").val();
+                var marca = $("#marca").val();
+                var estoque = $("#estoque").val();
+                var valor = $("#valor").val();
+
+                // Estrutura JSON
+                var estrutura = '{"codigo":'+codigo+',"produto":"'+produto+'", "marca":'+marca+', "estoque":'+estoque+', "valor":'+valor+'}';
+
+                // Enviando para a API
+                $.ajax({
+                    url: "http://localhost:8090/produto",
+                    type: "POST",
+                    data: estrutura,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        // Exibir resposta da API
+                        var r = resposta;
+
+                        // Alerta
+                        alert(r.mensagem);
+
+                        // Atualizar a tabela
+                        obterProdutos();
+                    }
+                });
+            });
+
+        });
+
+        //Selecionar dados do produtos
+        function selecionar(codigo){
+        
+            $.ajax({
+                    url: "http://localhost:8090/produto/"+codigo,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                      
+                        $("#codigo").val(resposta.codigo);
+                        $("#produto").val(resposta.produto);
+                        $("#marca").val(resposta.marca);
+                        $("#estoque").val(resposta.estoque);
+                        $("#valor").val(resposta.valor);
+                        
+                        $("#btnCadastrar").css("display", "none");
+                        $("#btnAlterar").css("display", "inline-block");
+                        $("#btnRemover").css("display", "inline-block");
+
+                        //Atualizar tabela
+                        obterProdutos();
+
+                    }
+                });
+        
+        }
+
+        //Remover usuario
+        function remover()
+        {
+             var codigo = $("#codigo").val();
+            
+            $.ajax({
+                    url: "http://localhost:8090/produto/"+codigo,
+                    type: "DELETE",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        alert(resposta.mensagem);
+                      
+                    
+                        $("#codigo").val("");
+                        $("#produto").val("");
+                        $("#marca").val("");
+                        $("#estoque").val("");
+                        $("#valor").val("");
+                        
+                        $("#btnCadastrar").css("display", "inline-block");
+                        $("#btnAlterar").css("display", "none");
+                        $("#btnRemover").css("display", "none");
+
+                        //Atualizar tabela
+                        obterProdutos();
+
+                    }
+                });
+
+            
+        }
+
+        // Alterar usuário
+        function alterar(){
+
+        // Obter dados
+        var codigo =    $("#codigo").val();
+        var produto =   $("#produto").val();
+        var marca =     $("#marca").val();
+        var estoque =   $("#estoque").val();
+        var valor =     $("#valor").val();
+
+        // Estrutura JSON
+        var estrutura = '{"codigo":'+codigo+',"produto":"'+produto+'", "marca":"'+marca+'", "estoque":'+estoque+', "valor":'+valor+'}';
+            console.log(estrutura);
+        // Enviando para a API
+        $.ajax({
+            url: "http://localhost:8090/produto",
+            type: "PUT",
+            data: estrutura,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(resposta){
+
+                // Limpar campos
+                $("#codigo").val("");
+                $("#produto").val("");
+                $("#marca").val("");
+                $("#estoque").val("");
+                $("#valor").val("");
+
+                // Botões
+                $("#btnCadastrar").css("display","inline-block");
+                $("#btnAlterar").css("display","none");
+                $("#btnRemover").css("display","none");
+
+                // Alerta
+                alert(resposta.mensagem);
+
+                // Atualizar a tabela
+                obterProdutos();
+            }
+        });
+        }
+
+    </script>
+
+</head>
+<body>
+        
+    <!-- Formulário -->
+        <form>
+            <input type="text" id="codigo" readonly class="form-control">
+            <input type="text" placeholder="Produto" id="produto" class="form-control">
+            <input type="text" placeholder="Marca" id="marca" class="form-control">
+            <input type="text" placeholder="Estoque" id="estoque" class="form-control">
+            <input type="text" placeholder="Valor" id="valor" class="form-control">
+            <input type="button" id="btnCadastrar" value="Cadastrar" class="btn btn-primary">
+            <input type="button" id="btnAlterar" value="Alterar" onclick="alterar()" class="btn btn-secondary">
+            <input type="button" id="btnRemover" value="Remover" onclick="remover()" class="btn btn-danger">
+        </form>
+    
+        <!-- Tabela -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th>Marca</th>
+                    <th>Estoque</th>
+                    <th>Valor</th>
+                    <th>Selecionar</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                
+            </tbody>
+        </table>
+    
+</body>
+</html>

@@ -1,0 +1,13 @@
+package dao;
+
+import bean.ClienteB;
+import db.ListaClientes;
+
+public class ClienteD {
+	
+	//Cadastrar
+	public static void cadastrar(ClienteB cliente) {
+		ListaClientes.clientes.add(cliente);
+	}
+
+}
